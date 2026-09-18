@@ -74,4 +74,5 @@ e on How to Use AI for Developer Productivity - https://axify.io/blog/use-ai-for
 [14] AI coding agents: Legal risks startup founders should know - https://technical.ly/sponsored-articles/ai-coding-agents-legal-risks-ballard-spahr
 
 [15] Ethics in AI-Generated Code Ownership Security and ... - https://kinde.com/learn/ai-for-software-engineering/security-and-compliance/ethics-in-ai-generated-code-ownership-security-and-compliance
+
 [16] Navigating compliance risks in AI code analysis - https://www.glean.com/perspectives/navigating-compliance-risks-in-ai-code-analysis
