@@ -44,8 +44,12 @@ Artificial Intelligence has firmly established itself as an indispensable co-pil
 
 ## References
 [1] New Opsera Report Reveals How AI is Transforming Software Delivery and Driving Business Outcomes - https://finance.yahoo.com/news/opsera-report-reveals-ai-transforming-140400075.html
+
 [2] Understanding AI's Impact on Developer Workflows - https://blog.jetbrains.com/research/2026/04/ai-impact-developer-workflows
+
+
 [3] The Impact of AI and Automation on Software Development - https://ieeechicago.org/the-impact-of-ai-and-automation-on-software-development-a-deep-dive
+
 [4] A 2026 Guide on How to Use AI for Developer Productivity - https://axify.io/blog/use-ai-for-developer-productivity
 [5] Top AI Use Cases for Software Development - https://riseuplabs.com/top-ai-use-cases-for-software-development
 [6] How can AI improve SDLC security? - https://www.palo-it.com/en/blog/applied-ai-sdlc
