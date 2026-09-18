@@ -50,16 +50,28 @@ Artificial Intelligence has firmly established itself as an indispensable co-pil
 
 [3] The Impact of AI and Automation on Software Development - https://ieeechicago.org/the-impact-of-ai-and-automation-on-software-development-a-deep-dive
 
-[4] A 2026 Guide on How to Use AI for Developer Productivity - https://axify.io/blog/use-ai-for-developer-productivity
+[4] A 2026 Guid
+e on How to Use AI for Developer Productivity - https://axify.io/blog/use-ai-for-developer-productivity
+
 [5] Top AI Use Cases for Software Development - https://riseuplabs.com/top-ai-use-cases-for-software-development
+
 [6] How can AI improve SDLC security? - https://www.palo-it.com/en/blog/applied-ai-sdlc
+
 [7] AI in SDLC: A Complete Guide to AI-Powered Software Development | AI-powered SDLC | Snyk - https://snyk.io/articles/complete-guide-ai-powered-software-development
+
 [8] What is AI SDLC? How It Transforms Software Delivery - Opsera - https://opsera.ai/blog/ai-sdlc
+
 [9] Impact of AI on the 2025 Software Engineering Job Market - https://www.sundeepteki.org/advice/impact-of-ai-on-the-2025-software-engineering-job-market
+
 [10] The Impact of AI on Engineering Jobs - https://www.intuit.com/blog/innovative-thinking/ai-impact-engineering-jobs
+
 [11] AI in Software Development: Tools, Risks, & Careers - Pace University - https://www.pace.edu/news/ai-software-development
+
 [12] How AI will change software engineering – with Martin Fowler - https://www.youtube.com/watch?v=CQmI4XKTa0U
+
 [13] Cybersecurity Risks of AI-Generated Code - https://cset.georgetown.edu/publication/cybersecurity-risks-of-ai-generated-code
+
 [14] AI coding agents: Legal risks startup founders should know - https://technical.ly/sponsored-articles/ai-coding-agents-legal-risks-ballard-spahr
+
 [15] Ethics in AI-Generated Code Ownership Security and ... - https://kinde.com/learn/ai-for-software-engineering/security-and-compliance/ethics-in-ai-generated-code-ownership-security-and-compliance
 [16] Navigating compliance risks in AI code analysis - https://www.glean.com/perspectives/navigating-compliance-risks-in-ai-code-analysis
