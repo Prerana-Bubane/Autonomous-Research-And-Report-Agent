@@ -13,6 +13,21 @@ final report appear one at a time as the agent actually works through them.
 """
 
 import streamlit as st
+import os
+
+# Bridge Streamlit Cloud's "Secrets" (set in the app dashboard when deployed)
+# into environment variables, BEFORE importing agent_langgraph - since that
+# module reads os.getenv() the moment it's imported. Locally, st.secrets will
+# just be empty and this block does nothing, so your .env file still works
+# exactly as before.
+try:
+    if "GEMINI_API_KEY" in st.secrets:
+        os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
+    if "TAVILY_API_KEY" in st.secrets:
+        os.environ["TAVILY_API_KEY"] = st.secrets["TAVILY_API_KEY"]
+except Exception:
+    pass  # no secrets.toml locally - that's fine, .env handles it instead
+
 from agent_langgraph import app
 
 st.set_page_config(page_title="Autonomous Research Agent", page_icon="🔎", layout="centered")
