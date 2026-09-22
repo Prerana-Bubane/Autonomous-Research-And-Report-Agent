@@ -30,9 +30,31 @@ from langgraph.graph import StateGraph, START, END
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
-MODEL_NAME = "gemini-3.5-flash-lite"
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+tavily_api_key = os.getenv("TAVILY_API_KEY")
+
+try:
+    import streamlit as st
+
+    if not gemini_api_key:
+        gemini_api_key = st.secrets["GEMINI_API_KEY"]
+
+    if not tavily_api_key:
+        tavily_api_key = st.secrets["TAVILY_API_KEY"]
+
+except Exception:
+    pass
+
+if not gemini_api_key:
+    raise ValueError("GEMINI_API_KEY is not configured.")
+
+if not tavily_api_key:
+    raise ValueError("TAVILY_API_KEY is not configured.")
+
+client = genai.Client(api_key=gemini_api_key)
+tavily = TavilyClient(api_key=tavily_api_key)
+
+MODEL_NAME = "gemini-3.8-flash"
 
 web_search_function = {
     "name": "web_search",
