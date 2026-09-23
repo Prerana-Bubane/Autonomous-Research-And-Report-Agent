@@ -21,40 +21,41 @@ Run this with: python agent_langgraph.py
 """
 
 import os
+import time
 from typing import TypedDict, List, Dict
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+from google.genai import errors as genai_errors
 from tavily import TavilyClient
 from langgraph.graph import StateGraph, START, END
 
 load_dotenv()
 
-gemini_api_key = os.getenv("GEMINI_API_KEY")
-tavily_api_key = os.getenv("TAVILY_API_KEY")
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+MODEL_NAME = "gemini-3.5-flash-lite"
 
-try:
-    import streamlit as st
 
-    if not gemini_api_key:
-        gemini_api_key = st.secrets["GEMINI_API_KEY"]
-
-    if not tavily_api_key:
-        tavily_api_key = st.secrets["TAVILY_API_KEY"]
-
-except Exception:
-    pass
-
-if not gemini_api_key:
-    raise ValueError("GEMINI_API_KEY is not configured.")
-
-if not tavily_api_key:
-    raise ValueError("TAVILY_API_KEY is not configured.")
-
-client = genai.Client(api_key=gemini_api_key)
-tavily = TavilyClient(api_key=tavily_api_key)
-
-MODEL_NAME = "gemini-3.8-flash"
+def generate_with_retry(contents, config=None, max_retries: int = 4, base_delay: int = 5):
+    """
+    Calls the Gemini API, automatically retrying with a growing wait time if
+    the model is temporarily overloaded (503 ServerError). This is common on
+    the free-tier flash-lite model under shared traffic - it's not a bug in
+    our code, just Google's servers being busy, so retrying briefly fixes it.
+    """
+    for attempt in range(max_retries):
+        try:
+            if config is not None:
+                return client.models.generate_content(model=MODEL_NAME, contents=contents, config=config)
+            return client.models.generate_content(model=MODEL_NAME, contents=contents)
+        except genai_errors.ServerError as e:
+            if attempt < max_retries - 1:
+                wait = base_delay * (attempt + 1)
+                print(f"⚠️ Model temporarily unavailable (attempt {attempt + 1}/{max_retries}). Retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                raise  # out of retries, let the real error surface
 
 web_search_function = {
     "name": "web_search",
@@ -117,8 +118,7 @@ def format_reference_list(sources: list) -> str:
 # ============================================================
 def plan_node(state: ResearchState) -> dict:
     print("🧭 Planning research...")
-    response = client.models.generate_content(
-        model=MODEL_NAME,
+    response = generate_with_retry(
         contents=(
             f"I want to write a well-researched report on: '{state['topic']}'. "
             f"Before any research happens, break this topic down into 3-5 specific "
@@ -152,7 +152,7 @@ def draft_node(state: ResearchState, max_turns: int = 6) -> dict:
 
     draft_text = "⚠️ No draft produced."
     for _ in range(max_turns):
-        response = client.models.generate_content(model=MODEL_NAME, contents=contents, config=config)
+        response = generate_with_retry(contents=contents, config=config)
         candidate = response.candidates[0]
         function_calls = [p.function_call for p in candidate.content.parts if p.function_call is not None]
         contents.append(candidate.content)
@@ -176,8 +176,7 @@ def draft_node(state: ResearchState, max_turns: int = 6) -> dict:
 
 def critique_node(state: ResearchState) -> dict:
     print(f"\n🔍 Critique round {state['round'] + 1} of {state['max_rounds']}...")
-    response = client.models.generate_content(
-        model=MODEL_NAME,
+    response = generate_with_retry(
         contents=(
             f"Here is a draft research report on '{state['topic']}':\n\n{state['current_version']}\n\n"
             f"Critically review this draft. List specific weaknesses: claims made "
@@ -190,8 +189,7 @@ def critique_node(state: ResearchState) -> dict:
 
 
 def revise_node(state: ResearchState) -> dict:
-    response = client.models.generate_content(
-        model=MODEL_NAME,
+    response = generate_with_retry(
         contents=(
             f"Current draft report on '{state['topic']}':\n\n{state['current_version']}\n\n"
             f"Critique of that draft:\n\n{state['critique']}\n\n"
