@@ -2,8 +2,8 @@
 
 An agentic AI system that autonomously plans a research strategy, searches the web, drafts a report, critiques its own work, and revises it — built with LangGraph and the Gemini API.
 
-**Live demo:** _(add your Streamlit Cloud link here after deploying)_
-**Video/GIF demo:** _(optional - a 30 second screen recording goes a long way)_
+**Live demo:** _(https://autonomous-research-and-report-agent-ke5on4xrmjdnsjvtqbradj.streamlit.app/)_
+
 
 ## What it does
 Give it any topic, and it will:
